@@ -1,12 +1,16 @@
+import 'dotenv/config'
+// require('dotenv').config();
 const args = process.argv.slice(2);
-console.log(args);
-if (!args?.length) {
-    throw Error("Invalid arguments");
-}
+// console.log(args);
+// if (!args?.length) {
+//     throw Error("Invalid arguments");
+// }
 
 let productquery = "";
-if(args[0]=="--name" && args[1]) productquery = args[1];
-
+if(args.length===2 && args[0]==="--name") productquery = args[1];
+// if(args.length>2 && args[0]==="--name") productquery = args.slice(1).join(" ")
+    ;
+console.log("productquery", productquery);
 const url = "https://anatta-test-store.myshopify.com/admin/api/2024-04/graphql.json";
 
 const productsQuery = {
@@ -53,11 +57,11 @@ function flattenProducts(products) {
     return prods;
 }
 
-fetch(url, {
+fetch(process.env.API_URL, {
     method: "POST",
     headers: {
         "Content-Type": "application/json",
-        "X-Shopify-Access-Token": "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"
+        "X-Shopify-Access-Token": process.env.SHOPIFY_ACCESS_TOKEN
     },
     body: JSON.stringify(productsQuery)
 })
