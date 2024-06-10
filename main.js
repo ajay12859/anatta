@@ -1,4 +1,4 @@
-import 'dotenv/config'
+// import 'dotenv/config'
 // require('dotenv').config();
 const args = process.argv.slice(2);
 // console.log(args);
@@ -10,8 +10,10 @@ let productquery = "";
 if(args.length===2 && args[0]==="--name") productquery = args[1];
 // if(args.length>2 && args[0]==="--name") productquery = args.slice(1).join(" ")
     ;
-console.log("productquery", productquery);
+// console.log("productquery", productquery);
+
 const url = "https://anatta-test-store.myshopify.com/admin/api/2024-04/graphql.json";
+const SHOPIFY_ACCESS_TOKEN = "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"
 
 const productsQuery = {
     operationName: "Query",
@@ -57,11 +59,11 @@ function flattenProducts(products) {
     return prods;
 }
 
-fetch(process.env.API_URL, {
+fetch(url, {
     method: "POST",
     headers: {
         "Content-Type": "application/json",
-        "X-Shopify-Access-Token": process.env.SHOPIFY_ACCESS_TOKEN
+        "X-Shopify-Access-Token": SHOPIFY_ACCESS_TOKEN
     },
     body: JSON.stringify(productsQuery)
 })
