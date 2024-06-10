@@ -10,7 +10,7 @@ let productquery = "";
 if(args.length===2 && args[0]==="--name") productquery = args[1];
 // if(args.length>2 && args[0]==="--name") productquery = args.slice(1).join(" ")
     ;
-// console.log("productquery", productquery);
+// console.log("productquery", `\"title:${productquery}*\"`);
 
 const url = "https://anatta-test-store.myshopify.com/admin/api/2024-04/graphql.json";
 const SHOPIFY_ACCESS_TOKEN = "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"
@@ -37,8 +37,7 @@ const productsQuery = {
             }
         }
     `,
-    variables: { "query": productquery }
-    
+    variables: { "query": `title:*${productquery}${productquery ? '*' : '' }` }
 }
 
 function flattenProducts(products) {
